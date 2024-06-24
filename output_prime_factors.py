@@ -23,9 +23,9 @@ def user_input():
 
 
 def output_factors(num):
+    print(">> ", end="")
     for i in range(1, num + 1):
-        # print("ahh", i)
-        # check for if i is a factor of num then confirms whether or not its prime
+        # Checks if i is a factor of num then determine if prime
         if (num % i == 0) and (check_prime(i)):
             print(i, end=" ")
 
@@ -48,12 +48,10 @@ def check_prime(n):
 
 def main():
     print("+++ +++ PRIME FACTORS +++ +++")
+    print("A prime factor is a natural number not 1, whose factors are 1 and itself.\n")
     user_input()
     print()
 
 
 if __name__ == "__main__":
     main()
-
-# TODO
-# add a short description of what a prime number is
