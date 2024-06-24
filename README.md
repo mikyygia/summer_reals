@@ -3,7 +3,7 @@
 - output_prime_factors done
 
 ### output_prime_factors done
-- This program can either output a fibonacci sequence up to "x" or output a fibonacci sequence up to length "x".
+- This program gets one input from the user and outputs all factors that are prime. For example, an input of 10 will output 2 and 5 as they're the factors that are prime.
 
 06/22/24:
 =====
