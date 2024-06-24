@@ -24,9 +24,8 @@ def user_input():
 
 def output_factors(num):
     for i in range(1, num + 1):
-        if (num == i):
-            continue
-
+        # print("ahh", i)
+        # check for if i is a factor of num then confirms whether or not its prime
         if (num % i == 0) and (check_prime(i)):
             print(i, end=" ")
 
@@ -38,12 +37,11 @@ def check_prime(n):
     if (n == 2):
         return True
 
-    if (n % 2 == 0):
-        return False
-
-    for i in range(2, int(sqrt(n))):
+    for i in range(2, n):
         if (n % i == 0):
             return False
+        else:
+            continue
 
     return True
 
