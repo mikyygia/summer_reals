@@ -1,6 +1,50 @@
 """
-    Takes in a roman numeral input and outputs its number equivalent    
+    Takes in a roman numeral input and outputs its number equivalent
+    
+    Rules:
+    1. The same roman numeral cannot be repeated more than 3 times in a row
+    - V, L, D cannot be repeated at all
+    2. I cannot be placed before L, C, D, or M
+    3. X cannot be placed before D, M
+    4. Roman numerals are written from largest to smallest from left to right
+    - A smaller numeral placed before a larger numeral indicates subtraction.
+    - A smaller numeral placed after a larger numeral indicates addition.
 """
+
+
+def is_invalid_rep(roman):
+    # Confirm rule 1
+
+    if len(roman) == 1:
+        return
+
+    counter = {
+        "I": 0,
+        "V": 0,
+        "X": 0,
+        "L": 0,
+        "C": 0,
+        "D": 0,
+        "M": 0,
+    }
+
+    more_than_once = ["V", "L", "D"]
+
+    for i in range(len(roman)):
+        if (i == 0):
+            counter[roman[i]] += 1
+        else:
+            if (roman[i] == roman[i - 1]) and (roman[i] in more_than_once):
+                raise ValueError
+            elif (roman[i] == roman[i - 1]):
+                counter[roman[i]] += 1
+
+                if (counter[roman[i]] > 3):
+                    # determine whether or not counter is above 3
+                    raise ValueError
+            elif (roman[i] != roman[i - 1]):
+                # resets counter
+                counter = {k: 0 for k in counter}
 
 
 def roman_to_num(roman):
@@ -48,11 +92,15 @@ def roman_to_num(roman):
 def main():
     print()
 
-    roman = input("Roman Numeral: ")
-    if (roman_to_num(roman) == 0):
-        print("Invalid")
-    else:
+    roman = input("Roman Numeral: ").upper()
+
+    try:
+        is_invalid_rep(roman)
+
         print(">>", roman_to_num(roman))
+
+    except ValueError:
+        print("Invalid")
 
 
 if __name__ == "__main__":
