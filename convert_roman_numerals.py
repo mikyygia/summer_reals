@@ -12,6 +12,21 @@
 """
 
 
+def is_invalid_bef(roman):
+    # Confirm rule 2
+
+    watch = roman[0]
+    i_watch = ["L", "C", "D", "M"]
+    x_watch = ["D", "M"]
+
+    for i in reversed(range(len(roman))):
+        for j in range(i):
+            if (roman[j] == "I") and (roman[i] in i_watch):
+                raise ValueError
+            elif (roman[j] == "X") and (roman[i] in x_watch):
+                raise ValueError
+
+
 def is_invalid_rep(roman):
     # Confirm rule 1
 
@@ -28,15 +43,17 @@ def is_invalid_rep(roman):
         "M": 0,
     }
 
-    more_than_once = ["V", "L", "D"]
+    if ((roman.count("V") >= 2) or (roman.count("L") >= 2) or (roman.count("D") >= 2)):
+        raise ValueError
 
     for i in range(len(roman)):
+        if not (roman[i] in counter):
+            raise ValueError
+
         if (i == 0):
             counter[roman[i]] += 1
         else:
-            if (roman[i] == roman[i - 1]) and (roman[i] in more_than_once):
-                raise ValueError
-            elif (roman[i] == roman[i - 1]):
+            if (roman[i] == roman[i - 1]):
                 counter[roman[i]] += 1
 
                 if (counter[roman[i]] > 3):
@@ -45,6 +62,7 @@ def is_invalid_rep(roman):
             elif (roman[i] != roman[i - 1]):
                 # resets counter
                 counter = {k: 0 for k in counter}
+                counter[roman[i]] += 1
 
 
 def roman_to_num(roman):
@@ -96,6 +114,7 @@ def main():
 
     try:
         is_invalid_rep(roman)
+        is_invalid_bef(roman)
 
         print(">>", roman_to_num(roman))
 
