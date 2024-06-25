@@ -6,6 +6,7 @@
     - V, L, D cannot be repeated at all
     2. I cannot be placed before L, C, D, or M
     3. X cannot be placed before D, M
+        etc.
     4. Roman numerals are written from largest to smallest from left to right
     - A smaller numeral placed before a larger numeral indicates subtraction.
     - A smaller numeral placed after a larger numeral indicates addition.
@@ -17,13 +18,22 @@ def is_invalid_bef(roman):
 
     watch = roman[0]
     i_watch = ["L", "C", "D", "M"]
+    v_watch = ["X", "L", "C", "D", "M"]
     x_watch = ["D", "M"]
+    l_watch = ["C", "M"]
+    d_watch = ["M"]
 
     for i in reversed(range(len(roman))):
-        for j in range(i):
+        for j in range(i + 1):
             if (roman[j] == "I") and (roman[i] in i_watch):
                 raise ValueError
             elif (roman[j] == "X") and (roman[i] in x_watch):
+                raise ValueError
+            elif (roman[j] == "V") and (roman[i] in v_watch):
+                raise ValueError
+            elif (roman[j] == "L") and (roman[i] in l_watch):
+                raise ValueError
+            elif (roman[j] == "D") and (roman[i] in d_watch):
                 raise ValueError
 
 
@@ -70,21 +80,25 @@ def roman_to_num(roman):
 
     roman = roman.upper()
 
-    if "IV" in roman:
-        num += 4
-        roman = roman.replace("IV", "")
-    elif "IX" in roman:
-        num += 9
-        roman = roman.replace("IX", "")
-    elif "XL" in roman:
-        num += 40
-        roman = roman.replace("XL", "")
-    elif "CD" in roman:
-        num += 400
-        roman = roman.replace("CD", "")
-    elif "CM" in roman:
-        num += 900
-        roman = roman.replace("CM", "")
+    for _ in roman:
+        if "IV" in roman:
+            num += 4
+            roman = roman.replace("IV", "")
+        elif "IX" in roman:
+            num += 9
+            roman = roman.replace("IX", "")
+        elif "XL" in roman:
+            num += 40
+            roman = roman.replace("XL", "")
+        elif "XC" in roman:
+            num += 90
+            roman = roman.replace("XC", "")
+        elif "CD" in roman:
+            num += 400
+            roman = roman.replace("CD", "")
+        elif "CM" in roman:
+            num += 900
+            roman = roman.replace("CM", "")
 
     for i in roman:
         if (i == "I"):
@@ -102,7 +116,7 @@ def roman_to_num(roman):
         elif (i == "M"):
             num += 1000
         else:
-            return 0
+            raise ValueError
 
     return num
 
@@ -119,7 +133,9 @@ def main():
         print(">>", roman_to_num(roman))
 
     except ValueError:
-        print("Invalid")
+        print("Invalid Format")
+    except IndexError:
+        print("Invalid Format")
 
 
 if __name__ == "__main__":
