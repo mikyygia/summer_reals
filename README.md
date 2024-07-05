@@ -1,3 +1,5 @@
+07/04/24: gif_creator
+
 06/25/24:
 =====
 - convert_roman_numerals done
